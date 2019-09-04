@@ -13,6 +13,7 @@ services:
     depends_on:
       - php
       - mysql
+      - redis
     networks:
       - laravel
 
@@ -44,6 +45,17 @@ services:
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+    networks:
+      - laravel
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - /data/redis:/data
     networks:
       - laravel
 
